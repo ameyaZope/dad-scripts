@@ -142,7 +142,6 @@ async function main() {
 					indxGrpval
 			);
 			companyList = await getCompaniesList(glType, indxGrpval);
-			companyList = companyList.slice(1, 4);
 			console.log(
 				'\nFetched ' +
 					companyList.length +
