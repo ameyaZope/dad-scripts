@@ -122,7 +122,7 @@ function getCompanyMainData(scripCode) {
 function convertJsonToXls(jsonObject, destinationFileName) {
 	return new Promise(function (resolve, reject) {
 		var xls = json2xls(jsonObject);
-		fs.writeFileSync(destinationFileName, xls, 'binary');
+		fs.writeFileSync(destinationFileName + '.xls', xls, 'binary');
 		resolve();
 	});
 }
@@ -142,6 +142,7 @@ async function main() {
 					indxGrpval
 			);
 			companyList = await getCompaniesList(glType, indxGrpval);
+			companyList = companyList.slice(1, 4);
 			console.log(
 				'\nFetched ' +
 					companyList.length +
@@ -184,7 +185,7 @@ async function main() {
 	}
 	console.log(allSelectedCompanes[0]);
 	console.log('Attempting to create Excel Sheet');
-	await convertJsonToXls(allSelectedCompanes, new Date().toLocaleString());
+	await convertJsonToXls(allSelectedCompanes, new Date().toString());
 	console.log('Excel sheet creation completed');
 }
 
