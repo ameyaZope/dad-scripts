@@ -1,0 +1,18 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script1.js",
+  "scripts": {
+    "runScript1": "node script1.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cli-progress": "^3.9.0",
+    "json2xls": "^0.1.2",
+    "request": "^2.88.2"
+  }
+}
