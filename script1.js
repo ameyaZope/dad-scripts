@@ -128,8 +128,8 @@ function convertJsonToXls(jsonObject, destinationFileName) {
 }
 
 async function main() {
-	glTypesList = ['loser'];
-	indxGrpvalList = ['A'];
+	glTypesList = ['loser', 'gainer'];
+	indxGrpvalList = ['A', 'B'];
 
 	allSelectedCompanes = [];
 
@@ -164,7 +164,15 @@ async function main() {
 				requiredCompanyData.scrip_cd = company.scrip_cd;
 				requiredCompanyData.scrip_grp = company['scrip_grp'];
 				requiredCompanyData.longName = company['LONG_NAME'];
-				requiredCompanyData.ltradert = company['ltradert'];
+				requiredCompanyData.last_trade_rate = company['ltradert'];
+				requiredCompanyData.mean_of_fifty2Week =
+					(parseFloat(companyMainData.Fifty2WkHigh_adj) +
+						parseFloat(companyMainData.Fifty2WkLow_adj)) /
+					2;
+				requiredCompanyData.percentage_above_52_week_low =
+					(100 *
+						(company.openrate - companyMainData.Fifty2WkLow_adj)) /
+					companyMainData.Fifty2WkLow_adj;
 				requiredCompanyData.change_val = company['change_val'];
 				requiredCompanyData.change_percentage =
 					company['change_percent'];
@@ -182,7 +190,6 @@ async function main() {
 			}
 		}
 	}
-	console.log(allSelectedCompanes[0]);
 	console.log('Attempting to create Excel Sheet');
 	await convertJsonToXls(allSelectedCompanes, new Date().toString());
 	console.log('Excel sheet creation completed');
