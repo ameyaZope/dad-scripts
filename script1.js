@@ -171,7 +171,8 @@ async function main() {
 					2;
 				requiredCompanyData.percentage_above_52_week_low =
 					(100 *
-						(company.openrate - companyMainData.Fifty2WkLow_adj)) /
+						(company['ltradert'] -
+							companyMainData.Fifty2WkLow_adj)) /
 					companyMainData.Fifty2WkLow_adj;
 				requiredCompanyData.change_val = company['change_val'];
 				requiredCompanyData.change_percentage =
