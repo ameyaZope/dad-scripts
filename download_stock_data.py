@@ -2,7 +2,7 @@ import requests
 import json
 from tqdm import tqdm
 import csv
-import datetime
+from datetime import datetime
 
 
 def get_companies_list(gl_type, indx_grp_val):
@@ -21,6 +21,7 @@ def get_companies_list(gl_type, indx_grp_val):
     }
     url = f"https://api.bseindia.com/BseIndiaAPI/api/MktRGainerLoserData/w?GLtype={gl_type}&IndxGrp=group&IndxGrpval={indx_grp_val}&orderby=all"
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     if response.status_code == 200:
         return json.loads(response.text)['Table']
     else:
@@ -45,6 +46,7 @@ def get_company_top_data():
     }
     url = 'https://api.bseindia.com/BseIndiaAPI/api/getScripHeaderData/w?Debtflag=&scripcode=532890&seriesid='
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     if response.status_code == 200:
         return json.loads(response.text)
     else:
@@ -68,6 +70,7 @@ def get_company_main_data(scrip_code):
     }
     url = f"https://api.bseindia.com/BseIndiaAPI/api/HighLow/w?Type=EQ&scripcode={scrip_code}"
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     if response.status_code == 200:
         return json.loads(response.text)
     else:
@@ -124,10 +127,9 @@ def main():
                 required_company_data['date_time'] = company['dt_tm']
                 required_company_data['url'] = company['URL']
                 all_selected_companies.append(required_company_data)
-                break;
 
     print('Attempting to create Excel Sheet')
-    convert_json_to_csv(all_selected_companies, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".csv")
+    convert_json_to_csv(all_selected_companies, str(datetime.now()) + ".csv")
     print('Excel sheet creation completed')
 
 if __name__ == '__main__':
